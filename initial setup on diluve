@@ -1,0 +1,38 @@
+Documentation
+https://hub.docker.com/r/plexinc/pms-docker/
+I followed the bridge networking example (which is also what the pi-hole docker seems to use.
+
+Prework
+ Login/create plex account.
+ Obtain a claim token through https://www.plex.tv/claim/
+    I dont know if i need to obtain such a token every time i run the container, or if one time is fine
+ Setup the volumes
+    I set up a presistant volume for the plexmediaserver library, which includes the configuration.
+ Run docker
+
+docker run \
+-d \
+--name plex \
+-p 32400:32400/tcp \
+-p 3005:3005/tcp \
+-p 8324:8324/tcp \
+-p 32469:32469/tcp \
+-p 1900:1900/udp \
+-p 32410:32410/udp \
+-p 32412:32412/udp \
+-p 32413:32413/udp \
+-p 32414:32414/udp \
+-e TZ="Europe/Madrid" \
+-e PLEX_CLAIM="claim-HEVpKvRUK1FdyTCsi9nQ" \
+-e ADVERTISE_IP="http://192.168.0.15:32400/" \
+-h plex \
+-v /mnt/tv:/data \
+-v /var/run/docker.persistant/pms-docker/var/lib/plexmediaserver:/config \
+plexinc/pms-docker
+
+TV
+Install plex app
+When logged in to the plex account obtain a link id through https://www.plex.tv/link/. The app on the tv will get you a token.
+
+Isues
+File permissions for plex server on the mounted data.
